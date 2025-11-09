@@ -73,6 +73,9 @@ proxy.config.json
 
 npx ng serve --open --proxy-config proxy.conf.json       
 
+npm install --save-dev @angular-devkit/build-angular
+
+
 ng serve
 
 --------------------------------------------------------------------------------------------------------------------------------------
