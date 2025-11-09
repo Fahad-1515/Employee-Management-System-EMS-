@@ -45,3 +45,33 @@ Demonstrates:
 | Angular frontend    | **4200**                                            | User interface            |
 | Proxy               | connects `/api/**` → `http://localhost:8080/api/**` | seamless integration      |
 
+-------------------------------------------------------------------------------------------------------------------------------------
+
+ems-backend
+mvn clean install
+mvn spring-boot:run
+
+------------------------------------------------------------------------------------------------------------------------------------
+ems-frontend
+npm install -g @angular/cli
+npm install
+
+update package.json  
+"start": "ng serve --proxy-config proxy.conf.json"
+
+proxy.config.json
+
+{
+  "/api": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
+
+npx ng serve --open --proxy-config proxy.conf.json       
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
