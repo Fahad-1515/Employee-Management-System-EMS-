@@ -37,3 +37,11 @@ Demonstrates:
 ✅ Spring Boot backend + Hibernate ORM
 ✅ MySQL database
 ✅ Full stack CRUD and security
+
+
+| Component           | Port                                                | Purpose                   |
+| ------------------- | --------------------------------------------------- | ------------------------- |
+| Spring Boot backend | **8080**                                            | REST API & authentication |
+| Angular frontend    | **4200**                                            | User interface            |
+| Proxy               | connects `/api/**` → `http://localhost:8080/api/**` | seamless integration      |
+
