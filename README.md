@@ -49,12 +49,13 @@ Demonstrates:
 
 ems-backend
 mvn clean install
-mvn spring-boot:run
+mvn spring-boot:run  | ./mvnw spring-boot:run
 
 http://localhost:4200
 
 ------------------------------------------------------------------------------------------------------------------------------------
 ems-frontend
+
 npm install -g @angular/cli
 npm install
 
