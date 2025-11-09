@@ -21,6 +21,17 @@ Responsive UI with Angular
 
 REST APIs built with Spring Boot + Hibernate
 
+
+🧩 1. Prerequisites
+
+Make sure you have these installed:
+
+Tool	Version	Check Command
+Java	17+	java -version
+Maven	3.8+	mvn -v
+MySQL Server	8+	mysql -V
+Node.js + npm	18+	node -v, npm -v
+Angular CLI	Latest	npm install -g @angular/cli
 Demonstrates:
 ✅ Angular + REST integration
 ✅ Spring Boot backend + Hibernate ORM
