@@ -1,51 +1,163 @@
-<div class="form-container">
-  <h2>Add New Employee</h2>
+<div class="employee-form-container">
+  <h2 mat-dialog-title>
+    <mat-icon>{{ isEdit ? "edit" : "person_add" }}</mat-icon>
+    {{ title }}
+  </h2>
 
-  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label>First Name</label>
-      <input type="text" formControlName="firstName" />
-      <small
-        *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched"
-      >
-        First name is required (min 2 chars)
-      </small>
-    </div>
+  <mat-dialog-content>
+    <form [formGroup]="employeeForm" class="employee-form">
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            formControlName="firstName"
+            placeholder="Enter first name"
+          />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error
+            *ngIf="employeeForm.get('firstName')?.hasError('required')"
+          >
+            First name is required
+          </mat-error>
+          <mat-error
+            *ngIf="employeeForm.get('firstName')?.hasError('minlength')"
+          >
+            First name must be at least 2 characters
+          </mat-error>
+          <mat-error
+            *ngIf="employeeForm.get('firstName')?.hasError('maxlength')"
+          >
+            First name cannot exceed 50 characters
+          </mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <label>Last Name</label>
-      <input type="text" formControlName="lastName" />
-      <small *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
-        Last name is required (min 2 chars)
-      </small>
-    </div>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            formControlName="lastName"
+            placeholder="Enter last name"
+          />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">
+            Last name is required
+          </mat-error>
+          <mat-error
+            *ngIf="employeeForm.get('lastName')?.hasError('minlength')"
+          >
+            Last name must be at least 2 characters
+          </mat-error>
+          <mat-error
+            *ngIf="employeeForm.get('lastName')?.hasError('maxlength')"
+          >
+            Last name cannot exceed 50 characters
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" formControlName="email" />
-      <small *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
-        Valid email is required
-      </small>
-    </div>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Enter email address"
+            type="email"
+          />
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <label>Role</label>
-      <input type="text" formControlName="role" />
-      <small *ngIf="employeeForm.get('role')?.invalid && employeeForm.get('role')?.touched">
-        Role is required
-      </small>
-    </div>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Phone Number</mat-label>
+          <input
+            matInput
+            formControlName="phoneNumber"
+            placeholder="Enter phone number"
+          />
+          <mat-icon matSuffix>phone</mat-icon>
+          <mat-error
+            *ngIf="employeeForm.get('phoneNumber')?.hasError('required')"
+          >
+            Phone number is required
+          </mat-error>
+          <mat-error
+            *ngIf="employeeForm.get('phoneNumber')?.hasError('pattern')"
+          >
+            Please enter a valid phone number
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="form-group">
-      <label>Salary</label>
-      <input type="number" formControlName="salary" />
-      <small *ngIf="employeeForm.get('salary')?.invalid && employeeForm.get('salary')?.touched">
-        Salary must be a positive number
-      </small>
-    </div>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="department">
+            <mat-option value="">Select Department</mat-option>
+            <mat-option *ngFor="let dept of departments" [value]="dept">
+              {{ dept }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>business</mat-icon>
+          <mat-error
+            *ngIf="employeeForm.get('department')?.hasError('required')"
+          >
+            Department is required
+          </mat-error>
+        </mat-form-field>
 
-    <button type="submit" [disabled]="isSubmitting">
-      {{ isSubmitting ? 'Saving...' : 'Save Employee' }}
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Position</mat-label>
+          <mat-select formControlName="position">
+            <mat-option value="">Select Position</mat-option>
+            <mat-option *ngFor="let position of positions" [value]="position">
+              {{ position }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>work</mat-icon>
+          <mat-error *ngIf="employeeForm.get('position')?.hasError('required')">
+            Position is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field full-width">
+          <mat-label>Salary</mat-label>
+          <input
+            matInput
+            formControlName="salary"
+            placeholder="Enter salary"
+            type="number"
+          />
+          <mat-icon matSuffix>attach_money</mat-icon>
+          <mat-error *ngIf="employeeForm.get('salary')?.hasError('required')">
+            Salary is required
+          </mat-error>
+          <mat-error *ngIf="employeeForm.get('salary')?.hasError('min')">
+            Salary must be positive
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()" [disabled]="loading">Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      [disabled]="!employeeForm.valid || loading"
+    >
+      <mat-icon>{{ isEdit ? "save" : "add" }}</mat-icon>
+      {{ loading ? "PLEASE WAIT..." : buttonText }}
     </button>
-  </form>
+  </mat-dialog-actions>
 </div>

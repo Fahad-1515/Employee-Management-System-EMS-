@@ -1,0 +1,153 @@
+.analytics-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.analytics-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.analytics-header h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #3f51b5;
+  margin-bottom: 10px;
+}
+
+.analytics-header p {
+  color: #666;
+  font-size: 16px;
+  margin: 0;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.analytics-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.analytics-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 15px;
+  color: #666;
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.stat-item:hover {
+  background: #e9ecef;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.department-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.employee-count {
+  font-size: 12px;
+  color: #666;
+}
+
+.salary-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.avg-salary {
+  font-weight: 600;
+  color: #28a745;
+  margin-bottom: 4px;
+}
+
+.salary-label {
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+}
+
+.coming-soon mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.coming-soon h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.coming-soon p {
+  margin: 0;
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .analytics-container {
+    padding: 10px;
+  }
+
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .salary-info {
+    align-items: flex-start;
+  }
+}

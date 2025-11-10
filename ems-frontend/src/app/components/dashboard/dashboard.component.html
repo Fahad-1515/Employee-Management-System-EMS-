@@ -1,0 +1,173 @@
+<mat-toolbar color="primary" class="dashboard-toolbar">
+  <span class="toolbar-title">
+    <mat-icon>business</mat-icon>
+    Employee Management System
+  </span>
+
+  <span class="spacer"></span>
+
+  <div class="user-info">
+    <mat-icon>account_circle</mat-icon>
+    <span class="user-name">{{ user?.username }}</span>
+    <span class="user-role">({{ user?.role }})</span>
+  </div>
+
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<div class="dashboard-container">
+  <!-- Welcome Section -->
+  <mat-card class="welcome-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>dashboard</mat-icon>
+        Welcome, {{ user?.username }}!
+      </mat-card-title>
+      <mat-card-subtitle
+        >Employee Management System Dashboard</mat-card-subtitle
+      >
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+        Manage your workforce efficiently with real-time analytics and
+        comprehensive employee management tools.
+      </p>
+
+      <div class="action-buttons">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="navigateToEmployees()"
+          class="action-btn"
+        >
+          <mat-icon>people</mat-icon>
+          Manage Employees
+        </button>
+
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="navigateToAnalytics()"
+          class="action-btn"
+        >
+          <mat-icon>analytics</mat-icon>
+          View Analytics
+        </button>
+
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="authService.isAdmin()"
+          class="action-btn"
+        >
+          <mat-icon>admin_panel_settings</mat-icon>
+          Admin Panel
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Statistics Grid -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon color="primary">groups</mat-icon>
+          Total Employees
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="stat-number">{{ stats.totalEmployees }}</h2>
+        <p class="stat-description">Active workforce</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon color="accent">business</mat-icon>
+          Departments
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="stat-number">{{ stats.totalDepartments }}</h2>
+        <p class="stat-description">Different departments</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon color="warn">attach_money</mat-icon>
+          Avg Salary
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="stat-number">${{ stats.avgSalary | number }}</h2>
+        <p class="stat-description">Average compensation</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon color="primary">person_add</mat-icon>
+          Recent Hires
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 class="stat-number">{{ stats.recentHires }}</h2>
+        <p class="stat-description">Last 30 days</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Quick Actions -->
+  <mat-card class="quick-actions-card">
+    <mat-card-header>
+      <mat-card-title>Quick Actions</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="quick-actions">
+        <button
+          mat-stroked-button
+          (click)="navigateToEmployees()"
+          class="quick-action-btn"
+        >
+          <mat-icon>add</mat-icon>
+          Add Employee
+        </button>
+        <button
+          mat-stroked-button
+          (click)="navigateToEmployees()"
+          class="quick-action-btn"
+        >
+          <mat-icon>search</mat-icon>
+          Search Employees
+        </button>
+        <button mat-stroked-button class="quick-action-btn">
+          <mat-icon>download</mat-icon>
+          Export Data
+        </button>
+        <button
+          mat-stroked-button
+          class="quick-action-btn"
+          *ngIf="authService.isAdmin()"
+        >
+          <mat-icon>settings</mat-icon>
+          System Settings
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

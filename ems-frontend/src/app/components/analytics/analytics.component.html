@@ -1,0 +1,81 @@
+<div class="analytics-container">
+  <div class="analytics-header">
+    <h2>
+      <mat-icon>analytics</mat-icon>
+      Employee Analytics
+    </h2>
+    <p>Comprehensive insights into your workforce</p>
+  </div>
+
+  <div class="analytics-grid">
+    <mat-card class="analytics-card">
+      <mat-card-header>
+        <mat-card-title>Department Distribution</mat-card-title>
+        <mat-card-subtitle>Employees per department</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="loading" class="loading-spinner">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>Loading analytics...</p>
+        </div>
+
+        <div *ngIf="!loading" class="stats-list">
+          <div *ngFor="let stat of departmentStats" class="stat-item">
+            <div class="stat-info">
+              <span class="department-name">{{ stat.department }}</span>
+              <span class="employee-count">{{ stat.count }} employees</span>
+            </div>
+            <div class="salary-info">
+              <span class="avg-salary">${{ stat.avgSalary | number }}</span>
+              <span class="salary-label">avg salary</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="analytics-card">
+      <mat-card-header>
+        <mat-card-title>Salary Analysis</mat-card-title>
+        <mat-card-subtitle
+          >Salary distribution across departments</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <div class="coming-soon">
+          <mat-icon>bar_chart</mat-icon>
+          <h3>Charts Coming Soon</h3>
+          <p>Interactive charts and visualizations will be implemented here.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="analytics-card">
+      <mat-card-header>
+        <mat-card-title>Employee Growth</mat-card-title>
+        <mat-card-subtitle>Hiring trends over time</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="coming-soon">
+          <mat-icon>trending_up</mat-icon>
+          <h3>Growth Metrics</h3>
+          <p>Employee growth analytics and trends visualization.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="analytics-card">
+      <mat-card-header>
+        <mat-card-title>Performance Metrics</mat-card-title>
+        <mat-card-subtitle>Key performance indicators</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="coming-soon">
+          <mat-icon>assessment</mat-icon>
+          <h3>KPI Dashboard</h3>
+          <p>Performance metrics and key indicators dashboard.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

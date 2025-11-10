@@ -1,56 +1,139 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee.model';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-employee-form',
   templateUrl: './employee-form.component.html',
   styleUrls: ['./employee-form.component.css'],
-  standalone: true, // ✅ Add this
-  imports: [CommonModule, ReactiveFormsModule], // ✅ Add these imports
 })
 export class EmployeeFormComponent implements OnInit {
-  employeeForm!: FormGroup;
-  isSubmitting = false;
+  employeeForm: FormGroup;
+  isEdit = false;
+  loading = false;
+  departments: string[] = [];
+  positions: string[] = [];
 
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeeService,
-    private router: Router
-  ) {}
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<EmployeeFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Employee
+  ) {
+    this.isEdit = !!data;
+    this.employeeForm = this.createForm();
+  }
 
   ngOnInit(): void {
-    this.employeeForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
+    this.loadFormData();
+    this.loadFilters();
+  }
+
+  createForm(): FormGroup {
+    return this.fb.group({
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
-      role: ['', Validators.required],
+      phoneNumber: [
+        '',
+        [Validators.required, Validators.pattern(/^\+?[0-9]{10,15}$/)],
+      ],
+      department: ['', Validators.required],
+      position: ['', Validators.required],
       salary: ['', [Validators.required, Validators.min(0)]],
     });
   }
 
-  onSubmit(): void {
-    if (this.employeeForm.invalid) {
-      this.employeeForm.markAllAsTouched();
-      return;
+  loadFormData(): void {
+    if (this.isEdit && this.data) {
+      this.employeeForm.patchValue({
+        firstName: this.data.firstName,
+        lastName: this.data.lastName,
+        email: this.data.email,
+        phoneNumber: this.data.phoneNumber,
+        department: this.data.department,
+        position: this.data.position,
+        salary: this.data.salary,
+      });
     }
+  }
 
-    this.isSubmitting = true;
-    const employee: Employee = this.employeeForm.value;
-
-    this.employeeService.createEmployee(employee).subscribe({
-      next: () => {
-        alert('✅ Employee added successfully!');
-        this.router.navigate(['/employees']);
-      },
-      error: (err) => {
-        console.error('Error adding employee', err);
-        alert('❌ Failed to add employee.');
-        this.isSubmitting = false;
-      },
+  loadFilters(): void {
+    this.employeeService.getDepartments().subscribe((departments) => {
+      this.departments = departments;
     });
+
+    this.employeeService.getPositions().subscribe((positions) => {
+      this.positions = positions;
+    });
+  }
+
+  onSubmit(): void {
+    if (this.employeeForm.valid) {
+      this.loading = true;
+      const employeeData: Employee = this.employeeForm.value;
+
+      const operation = this.isEdit
+        ? this.employeeService.updateEmployee(this.data.id!, employeeData)
+        : this.employeeService.createEmployee(employeeData);
+
+      operation.subscribe({
+        next: (employee) => {
+          this.loading = false;
+          this.snackBar.open(
+            `Employee ${this.isEdit ? 'updated' : 'created'} successfully!`,
+            'Close',
+            { duration: 3000 }
+          );
+          this.dialogRef.close(true);
+        },
+        error: (error) => {
+          this.loading = false;
+          this.snackBar.open(
+            `Error ${this.isEdit ? 'updating' : 'creating'} employee`,
+            'Close',
+            { duration: 5000 }
+          );
+        },
+      });
+    } else {
+      this.markFormGroupTouched();
+    }
+  }
+
+  onCancel(): void {
+    this.dialogRef.close(false);
+  }
+
+  private markFormGroupTouched(): void {
+    Object.keys(this.employeeForm.controls).forEach((key) => {
+      this.employeeForm.get(key)?.markAsTouched();
+    });
+  }
+
+  get title(): string {
+    return this.isEdit ? 'Edit Employee' : 'Add New Employee';
+  }
+
+  get buttonText(): string {
+    return this.isEdit ? 'Update Employee' : 'Create Employee';
   }
 }

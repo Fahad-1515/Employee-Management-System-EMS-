@@ -1,42 +1,49 @@
-.form-container {
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: #f9f9f9;
+.employee-form-container {
+  min-width: 500px;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.employee-form-container h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: #3f51b5;
 }
 
-label {
-  font-weight: 600;
+.employee-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px 0;
 }
 
-input {
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-field {
+  flex: 1;
+}
+
+.full-width {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
-small {
-  color: red;
+mat-dialog-actions {
+  padding: 20px 0 0 0;
+  margin-top: 20px;
+  border-top: 1px solid #eee;
 }
 
-button {
-  background-color: #28a745;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
+/* Responsive Design */
+@media (max-width: 600px) {
+  .employee-form-container {
+    min-width: auto;
+    width: 100%;
+  }
 
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  .form-row {
+    flex-direction: column;
+  }
 }

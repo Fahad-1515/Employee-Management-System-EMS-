@@ -1,29 +1,52 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  standalone: true, // ✅ Add this
-  imports: [CommonModule, FormsModule], // ✅ Add these imports
 })
 export class LoginComponent {
-  username = '';
-  password = '';
+  loginForm: FormGroup;
+  loading = false;
+  hidePassword = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
-
-  login() {
-    this.authService.login({ username: this.username, password: this.password }).subscribe({
-      next: (res) => {
-        this.authService.setToken(res.token);
-        this.router.navigate(['/employees']);
-      },
-      error: () => alert('Invalid username or password'),
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      this.loading = true;
+      this.authService.login(this.loginForm.value).subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard']);
+          this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
+        },
+        error: (error) => {
+          this.loading = false;
+          this.snackBar.open(
+            'Login failed! Please check your credentials.',
+            'Close',
+            { duration: 5000 }
+          );
+        },
+      });
+    }
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
   }
 }

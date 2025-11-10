@@ -1,20 +1,5 @@
-nav {
-  background-color: #343a40;
-  color: white;
-  padding: 10px;
-}
-
-a {
-  color: #61dafb;
-  margin: 0 10px;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-h1 {
-  display: inline;
-  margin-right: 20px;
+/* App level styles */
+:host {
+  display: block;
+  min-height: 100vh;
 }

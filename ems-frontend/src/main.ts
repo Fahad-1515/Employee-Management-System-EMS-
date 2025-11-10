@@ -1,15 +1,6 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { AppComponent } from './app/app.component';
-import { routes } from './app/app.routes';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideRouter(routes),
-    provideHttpClient(withFetch()), // ✅ modern replacement for HttpClientModule
-    importProvidersFrom(ReactiveFormsModule, FormsModule),
-  ],
-}).catch((err) => console.error(err));
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch((err) => console.error(err));

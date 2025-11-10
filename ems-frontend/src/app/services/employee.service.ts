@@ -1,33 +1,69 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Employee } from '../models/employee.model';
+import {
+  Employee,
+  EmployeeResponse,
+  EmployeeSearchCriteria,
+} from '../models/employee.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  private baseUrl = '/api/employees';
+  private apiUrl = '/api/employees';
 
   constructor(private http: HttpClient) {}
 
-  getAllEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.baseUrl);
+  searchEmployees(
+    page: number = 0,
+    size: number = 10,
+    criteria: EmployeeSearchCriteria = {}
+  ): Observable<EmployeeResponse> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    if (criteria.searchTerm) {
+      params = params.set('search', criteria.searchTerm);
+    }
+    if (criteria.department) {
+      params = params.set('department', criteria.department);
+    }
+    if (criteria.position) {
+      params = params.set('position', criteria.position);
+    }
+    if (criteria.minSalary) {
+      params = params.set('minSalary', criteria.minSalary.toString());
+    }
+    if (criteria.maxSalary) {
+      params = params.set('maxSalary', criteria.maxSalary.toString());
+    }
+
+    return this.http.get<EmployeeResponse>(this.apiUrl, { params });
   }
 
   getEmployeeById(id: number): Observable<Employee> {
-    return this.http.get<Employee>(`${this.baseUrl}/${id}`);
+    return this.http.get<Employee>(`${this.apiUrl}/${id}`);
   }
 
   createEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.baseUrl, employee);
+    return this.http.post<Employee>(this.apiUrl, employee);
   }
 
   updateEmployee(id: number, employee: Employee): Observable<Employee> {
-    return this.http.put<Employee>(`${this.baseUrl}/${id}`, employee);
+    return this.http.put<Employee>(`${this.apiUrl}/${id}`, employee);
   }
 
   deleteEmployee(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getDepartments(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/departments`);
+  }
+
+  getPositions(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/positions`);
   }
 }
