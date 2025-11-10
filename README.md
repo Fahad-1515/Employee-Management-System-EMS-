@@ -1,14 +1,10 @@
-# Employee-Management-System-EMS-
+#  Employee Management System (EMS)
 
-Tech Stack: Java, Spring Boot, Hibernate, MySQL, Angular, JWT
+### Tech Stack: Java, Spring Boot, Hibernate, MySQL, Angular, JWT , MySQL
 
-start making 1. Employee Management System (EMS)
+## Implemented -- CRUD, REST APIs, data validation, and authentication.
 
-Tech Stack: Java, Spring Boot, Hibernate, Angular, MySQL
-
-Why: It’s classic but powerful — covers CRUD, REST APIs, data validation, and authentication.
-
-Features:
+## Features:
 
 Login/Logout (JWT-based Authentication)
 
@@ -22,7 +18,7 @@ Responsive UI with Angular
 
 REST APIs built with Spring Boot + Hibernate
 
-🧩 1. Prerequisites
+### Prerequisites
 
 Make sure you have these installed:
 
@@ -32,7 +28,7 @@ Maven 3.8+ mvn -v
 MySQL Server 8+ mysql -V
 Node.js + npm 18+ node -v, npm -v
 Angular CLI Latest npm install -g @angular/cli
-Demonstrates:
+### Demonstrates:
 ✅ Angular + REST integration
 ✅ Spring Boot backend + Hibernate ORM
 ✅ MySQL database
