@@ -48,7 +48,11 @@ Demonstrates:
 
 ems-backend
 mvn clean install
+<<<<<<< HEAD
 mvn spring-boot:run | ./mvnw spring-boot:run
+=======
+mvn spring-boot:run  | ./mvnw spring-boot:run
+>>>>>>> c03f3d68b262d84c1d27884b9c3988a3844b9649
 
 http://localhost:4200
 
@@ -72,7 +76,18 @@ proxy.config.json
 }
 }
 
+<<<<<<< HEAD
 npx ng serve --open --proxy-config proxy.conf.json | ng serve --proxy-config proxy.conf.json
+=======
+npx ng serve --open --proxy-config proxy.conf.json      | ng serve --proxy-config proxy.conf.json
+
+npm install --save-dev @angular-devkit/build-angular
+
+
+ng serve
+
+--------------------------------------------------------------------------------------------------------------------------------------
+>>>>>>> c03f3d68b262d84c1d27884b9c3988a3844b9649
 
 npm install --save-dev @angular-devkit/build-angular
 

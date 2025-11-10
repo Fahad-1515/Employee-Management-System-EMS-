@@ -15,6 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
+<<<<<<< HEAD
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/ems-frontend",
@@ -28,6 +29,20 @@
               "src/styles.css"
             ],
             "scripts": []
+=======
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": ["src/styles.css"]
+>>>>>>> c03f3d68b262d84c1d27884b9c3988a3844b9649
           },
           "configurations": {
             "production": {
@@ -69,19 +84,33 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
+<<<<<<< HEAD
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "ems-frontend:build"
           }
+=======
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+>>>>>>> c03f3d68b262d84c1d27884b9c3988a3844b9649
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
+<<<<<<< HEAD
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
             "scripts": []
+=======
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": ["src/styles.css"]
+>>>>>>> c03f3d68b262d84c1d27884b9c3988a3844b9649
           }
         }
       }
