@@ -44,9 +44,9 @@ Angular CLI Latest npm install -g @angular/cli
 
 ### Run ems-backend
 
-mvn clean install
+* mvn clean install
 
-mvn spring-boot:run | ./mvnw spring-boot:run
+* mvn spring-boot:run | ./mvnw spring-boot:run
 
 http://localhost:4200    ---View Website
 
@@ -71,9 +71,9 @@ proxy.config.json
 
 ### Run FrontEnd
 
-npm install --save-dev @angular-devkit/build-angular
+* npm install --save-dev @angular-devkit/build-angular
 
-npx ng serve --open --proxy-config proxy.conf.json  |  (Prefered) ng serve --proxy-config proxy.conf.json  |  ng serve
+* npx ng serve --open --proxy-config proxy.conf.json  |  (Prefered) ng serve --proxy-config proxy.conf.json  |  ng serve
 
 --------------------------------------------------------------------------------------------------------------------------------------
 <img width="1404" height="879" alt="Screenshot 2025-11-10 221847" src="https://github.com/user-attachments/assets/d491bee9-582e-4e9f-ad1e-645d21d91c11" />
