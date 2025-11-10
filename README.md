@@ -72,7 +72,7 @@ proxy.config.json
   }
 }
 
-npx ng serve --open --proxy-config proxy.conf.json       
+npx ng serve --open --proxy-config proxy.conf.json      | ng serve --proxy-config proxy.conf.json
 
 npm install --save-dev @angular-devkit/build-angular
 
