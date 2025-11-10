@@ -6,17 +6,17 @@
 
 ## Features:
 
-Login/Logout (JWT-based Authentication)
+* Login/Logout (JWT-based Authentication)
 
-CRUD for employees (add, update, delete, list)
+* CRUD for employees (add, update, delete, list)
 
-Search and filter employees
+* Search and filter employees
 
-Role-based access (Admin/User)
+* Role-based access (Admin/User)
 
-Responsive UI with Angular
+* Responsive UI with Angular
 
-REST APIs built with Spring Boot + Hibernate
+* REST APIs built with Spring Boot + Hibernate
 
 ### Prerequisites
 
