@@ -18,14 +18,27 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public Page<Employee> getAllEmployees(int page, int size, String search) {
+    // UPDATED METHOD - Now accepts all search parameters
+    public Page<Employee> getAllEmployees(int page, int size, String search, 
+                                         String department, String position, 
+                                         Double minSalary, Double maxSalary) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
         
-        if (search != null && !search.trim().isEmpty()) {
+        // Use advanced search if any advanced filters are provided
+        if (department != null || position != null || minSalary != null || maxSalary != null) {
+            return employeeRepository.advancedSearch(search, department, position, minSalary, maxSalary, pageable);
+        }
+        // Otherwise use basic search
+        else if (search != null && !search.trim().isEmpty()) {
             return employeeRepository.searchEmployees(search.trim(), pageable);
         } else {
             return employeeRepository.findAll(pageable);
         }
+    }
+
+    // Keep the old method for backward compatibility (optional)
+    public Page<Employee> getAllEmployees(int page, int size, String search) {
+        return getAllEmployees(page, size, search, null, null, null, null);
     }
 
     public Employee getEmployeeById(Long id) {
@@ -60,6 +73,10 @@ public class EmployeeService {
 
     public List<String> getDistinctDepartments() {
         return employeeRepository.findDistinctDepartments();
+    }
+
+    public List<String> getDistinctPositions() {
+        return employeeRepository.findDistinctPositions();
     }
 
     public Page<Employee> getEmployeesByDepartment(String department, int page, int size) {

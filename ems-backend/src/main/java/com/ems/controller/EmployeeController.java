@@ -24,9 +24,13 @@ public class EmployeeController {
     public ResponseEntity<Page<Employee>> getEmployees(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String search) {
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String department,
+            @RequestParam(required = false) String position,
+            @RequestParam(required = false) Double minSalary,
+            @RequestParam(required = false) Double maxSalary) {
         
-        Page<Employee> employees = employeeService.getAllEmployees(page, size, search);
+        Page<Employee> employees = employeeService.getAllEmployees(page, size, search, department, position, minSalary, maxSalary);
         return ResponseEntity.ok(employees);
     }
 
@@ -77,6 +81,12 @@ public class EmployeeController {
     public ResponseEntity<List<String>> getDepartments() {
         List<String> departments = employeeService.getDistinctDepartments();
         return ResponseEntity.ok(departments);
+    }
+
+    @GetMapping("/positions")
+    public ResponseEntity<List<String>> getPositions() {
+        List<String> positions = employeeService.getDistinctPositions();
+        return ResponseEntity.ok(positions);
     }
 
     @GetMapping("/department/{department}")
