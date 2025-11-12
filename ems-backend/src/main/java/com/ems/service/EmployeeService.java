@@ -83,4 +83,7 @@ public class EmployeeService {
         Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
         return employeeRepository.findByDepartment(department, pageable);
     }
+    public List<Employee> getAllEmployeesForExport() {
+    return employeeRepository.findAll(Sort.by("firstName").ascending());
+}
 }
