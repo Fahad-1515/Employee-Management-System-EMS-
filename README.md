@@ -73,6 +73,12 @@ proxy.config.json
 
 ### Run FrontEnd
 
+npm install chart.js
+npm install ng2-charts
+npm install --save-dev @types/jasmine
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+
 - npm install --save-dev @angular-devkit/build-angular
 
 - npx ng serve --open --proxy-config proxy.conf.json | (Prefered) ng serve --proxy-config proxy.conf.json | ng serve

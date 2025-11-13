@@ -10,6 +10,18 @@
     </button>
   </div>
 
+  <!-- Export Buttons Section -->
+  <div class="export-buttons" style="margin: 15px 0; display: flex; gap: 10px">
+    <button mat-raised-button color="primary" (click)="exportToCSV()">
+      <mat-icon>download</mat-icon>
+      Export to CSV
+    </button>
+    <button mat-raised-button color="accent" (click)="exportToExcel()">
+      <mat-icon>download</mat-icon>
+      Export to Excel
+    </button>
+  </div>
+
   <!-- Search Section -->
   <mat-card class="search-card">
     <mat-card-content>

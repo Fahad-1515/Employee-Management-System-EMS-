@@ -77,12 +77,42 @@ export class EmployeeListComponent implements OnInit {
   }
 
   loadFilters(): void {
-    this.employeeService.getDepartments().subscribe((departments) => {
-      this.departments = departments;
+    this.employeeService.getDepartments().subscribe({
+      next: (departments) => {
+        this.departments = departments;
+      },
+      error: (error) => {
+        console.error('Error loading departments:', error);
+        // Fallback data
+        this.departments = [
+          'IT',
+          'HR',
+          'Finance',
+          'Marketing',
+          'Sales',
+          'Operations',
+        ];
+      },
     });
 
-    this.employeeService.getPositions().subscribe((positions) => {
-      this.positions = positions;
+    this.employeeService.getPositions().subscribe({
+      next: (positions) => {
+        this.positions = positions;
+      },
+      error: (error) => {
+        console.error('Error loading positions:', error);
+        // Fallback data
+        this.positions = [
+          'Software Engineer',
+          'HR Manager',
+          'Financial Analyst',
+          'Marketing Specialist',
+          'Sales Manager',
+          'Operations Manager',
+          'System Administrator',
+          'Frontend Developer',
+        ];
+      },
     });
   }
 
@@ -138,9 +168,55 @@ export class EmployeeListComponent implements OnInit {
   }
 
   exportToCSV(): void {
-    this.snackBar.open('Export feature coming soon!', 'Close', {
-      duration: 3000,
+    this.employeeService.exportToCSV().subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `employees_${Date.now()}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.snackBar.open('CSV exported successfully!', 'Close', {
+          duration: 3000,
+        });
+      },
+      error: (error) => {
+        this.snackBar.open('Error exporting CSV', 'Close', { duration: 5000 });
+      },
     });
+  }
+
+  exportToExcel(): void {
+    this.employeeService.exportToExcel().subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `employees_${Date.now()}.xlsx`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.snackBar.open('Excel exported successfully!', 'Close', {
+          duration: 3000,
+        });
+      },
+      error: (error) => {
+        this.snackBar.open('Error exporting Excel', 'Close', {
+          duration: 5000,
+        });
+      },
+    });
+  }
+  private downloadFile(
+    blob: Blob,
+    filename: string,
+    contentType: string
+  ): void {
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
   toggleAdvancedSearch(): void {

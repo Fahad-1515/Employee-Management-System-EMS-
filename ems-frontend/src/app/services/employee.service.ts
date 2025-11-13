@@ -12,6 +12,7 @@ import {
 })
 export class EmployeeService {
   private apiUrl = '/api/employees';
+  private exportApiUrl = '/api/export'; // Separate URL for exports
 
   constructor(private http: HttpClient) {}
 
@@ -65,5 +66,33 @@ export class EmployeeService {
 
   getPositions(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/positions`);
+  }
+
+  // CORRECTED: Use the exportApiUrl instead of apiUrl for export endpoints
+  exportToCSV(): Observable<Blob> {
+    return this.http.get(`${this.exportApiUrl}/employees/csv`, {
+      responseType: 'blob',
+    });
+  }
+
+  exportToExcel(): Observable<Blob> {
+    return this.http.get(`${this.exportApiUrl}/employees/excel`, {
+      responseType: 'blob',
+    });
+  }
+  getDashboardStats(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/stats`);
+  }
+  getEmployeeStatistics(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/statistics`);
+  }
+
+  emailExists(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/check-email?email=${email}`);
+  }
+
+  // If you want real department count
+  getDepartmentCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/departments/count`);
   }
 }
