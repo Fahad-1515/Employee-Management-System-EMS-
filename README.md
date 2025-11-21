@@ -1,4 +1,4 @@
-# Employee Management System (EMS)
+# Employee Management System (EMS) Track Employees Status in a Company
 
 ### Tech Stack: Java, Spring Boot, Hibernate, MySQL, Angular, JWT , MySQL
 
